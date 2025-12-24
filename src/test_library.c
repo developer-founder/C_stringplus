@@ -4,15 +4,17 @@
 #include <string.h>
 
 int main() {
-    const char *str1 = "Hello, world!";
-    const char *str2 = "Hello-";
+    const char *str1 = "atoms\0\0\0\0";
+    const char *str2 = "atoms\0abc";
+    const char *str3 = "atomsaaa";
+
     int result;
     int myresult;
 
-    result = memcmp(str2, str1, 13);
-    myresult = s21_memcmp(str2, str1, 13);
-    printfln("%d", result);
-    printfln("%d", myresult);
+    result = s21_strncmp(str1, str2, 8);
+    myresult = s21_memcmp(str1, str2, 8);
+    printf("%d\n", result);
+    printf("%d\n", myresult);
 
     return 0;
 }

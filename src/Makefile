@@ -1,4 +1,4 @@
-SRC = s21_memcmp.c
+SRC = s21_memcmp.c s21_strncmp.c
 TARGET = s21_stringplus
 
 .PHONY: all clean test gcov_report run
@@ -6,9 +6,10 @@ TARGET = s21_stringplus
 all: run
 
 run:
-	gcc -c s21_memcmp.c
+	gcc -c $(SRC)
 	ar r s21_stringlib.a *.o
 	gcc test_library.c -L. s21_stringlib.a
+	rm -rf *.o
 	./a.out
 
 clean:
