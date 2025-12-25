@@ -1,4 +1,4 @@
-SRC = s21_memcmp.c s21_strncmp.c
+SRC = s21_string_functions/s21_memchr.c s21_string_functions/s21_memcmp.c s21_string_functions/s21_strncmp.c s21_string_functions/s21_memcpy.c
 TARGET = s21_stringplus
 
 .PHONY: all clean test gcov_report run
