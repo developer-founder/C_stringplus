@@ -1,4 +1,4 @@
-SRC = s21_string_functions/s21_memchr.c s21_string_functions/s21_memcmp.c s21_string_functions/s21_strncmp.c s21_string_functions/s21_memcpy.c
+SRC = s21_string_functions/s21_memset.c s21_string_functions/s21_memchr.c s21_string_functions/s21_memcmp.c s21_string_functions/s21_strncmp.c s21_string_functions/s21_memcpy.c
 TARGET = s21_stringplus
 
 .PHONY: all clean test gcov_report run
@@ -8,9 +8,9 @@ all: run
 run:
 	gcc -c $(SRC)
 	ar r s21_stringlib.a *.o
-	gcc test_library.c -L. s21_stringlib.a
+	gcc test_library.c -L. s21_stringlib.a -o s21_test.out
 	rm -rf *.o
-	./a.out
+	./s21_test.out
 
 clean:
 	rm -rf *.a
