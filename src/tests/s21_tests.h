@@ -3,8 +3,10 @@
 
 #include <stdio.h>
 #include <limits.h>
+#include <check.h>
 
 #include "../s21_string.h"
+
 
 
 #endif
