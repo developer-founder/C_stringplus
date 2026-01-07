@@ -2,7 +2,7 @@
 
 void *s21_memchr(const void *str, int c, s21_size_t n) {
     int result = 0;
-    int i = 0;
+    s21_size_t i = 0;
     while (i++ < n && !result) {
         if (*(char *)str == c) {
             result = 1;

@@ -1,17 +1,60 @@
-SRC = s21_string_functions/s21_memset.c s21_string_functions/s21_memchr.c s21_string_functions/s21_memcmp.c s21_string_functions/s21_strncmp.c s21_string_functions/s21_memcpy.c s21_string_functions/s21_strlen.c
-TARGET = s21_stringplus
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -std=c11 -pedantic
 
-.PHONY: all clean test gcov_report run
+SRC_DIR = s21_string_functions
+SRC = $(SRC_DIR)/*.c
+OBJ = $(SRC:.c=.o)
 
-all: run
+TSRC_DIR = tests
+TSRC = $(TSRC_DIR)/*.c
+TOBJ = $(TSRC:.c=.o)
 
-run:
-	gcc -c $(SRC)
-	ar r s21_stringlib.a *.o
-	gcc tests/s21_test_strlen.c -L. s21_stringlib.a -o s21_test.out
-	rm -rf *.o
-	./s21_test.out
+AR = ar
+ARFLAGS = rcs
+
+LIB_NAME = s21_string.a
+NAME = s21_string
+UNAME=$(shell uname -s)
+
+ifeq ($(UNAME), Linux)
+	LIBS=-lcheck -lm -lrt -lpthread -lsubunit
+endif
+ifeq ($(UNAME), Darwin)
+	LIBS=-lcheck
+endif
+
+SRC_DIR = s21_string_functions
+SRC = $(SRC_DIR)/*.c
+OBJ = $(SRC:.c=.o)
+
+TSRC_DIR = tests
+TSRC = $(TSRC_DIR)/*.c
+TOBJ = $(TSRC:.c=.o)
+
+.PHONY: all clean test gcov_report
+
+$(LIB_NAME): $(OBJ)
+	ar rcs $@ $^
+
+$(OBJ): $(SRC)
+	$(CC) $(CFLAGS) -c $^
+	mv *.o s21_string_functions
+
+$(TOBJ): $(TSRC)
+	$(CC) $(CFLAGS) -c $^
+	mv *.o tests
+
+all: test
+
+test: $(OBJ) $(TOBJ)
+	$(CC) $^ $(CFLAGS) -o $(NAME) $(LIBS)
+	./$(NAME)
+
+check_style:
+	clang-format -n --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
+
+fix_style:
+	clang-format -i --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
 
 clean:
-	rm -rf *.a
-	rm -rf *.o
+	rm -rf *.o *.a $(SRC_DIR)/*.o $(TSRC_DIR)/*.o
