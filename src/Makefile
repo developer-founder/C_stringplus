@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c11 -pedantic
+CFLAGS = -Wall -Wextra -Werror -std=c11
 
 SRC_DIR = s21_string_functions
 SRC = $(SRC_DIR)/*.c
@@ -14,14 +14,6 @@ ARFLAGS = rcs
 
 LIB_NAME = s21_string.a
 NAME = s21_string
-UNAME=$(shell uname -s)
-
-ifeq ($(UNAME), Linux)
-	LIBS=-lcheck -lm -lrt -lpthread -lsubunit
-endif
-ifeq ($(UNAME), Darwin)
-	LIBS=-lcheck
-endif
 
 SRC_DIR = s21_string_functions
 SRC = $(SRC_DIR)/*.c
