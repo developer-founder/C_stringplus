@@ -46,7 +46,7 @@ check_style:
 	clang-format -n --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
 
 fix_style:
-	clang-format -i --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
+	clang-format -i --style="Google" $(SRC_DIR)/*.c $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
 
 clean:
 	rm -rf *.o *.a $(SRC_DIR)/*.o $(TSRC_DIR)/*.o
