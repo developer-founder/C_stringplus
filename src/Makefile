@@ -39,8 +39,8 @@ $(TOBJ): $(TSRC)
 all: test
 
 test: $(OBJ) $(TOBJ)
-	$(CC) $^ $(CFLAGS) -v -o $(NAME)
-	rm -rf s21_string_functions/*.o
+	$(CC) $^ $(CFLAGS) -o $(NAME) $(LIBS)
+	rm -rf *.o *.a $(SRC_DIR)/*.o $(TSRC_DIR)/*.o
 	./$(NAME)
 
 check_style:
