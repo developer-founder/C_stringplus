@@ -39,9 +39,9 @@ $(TOBJ): $(TSRC)
 all: test
 
 test: $(OBJ) $(TOBJ)
-	$(CC) $^ $(CFLAGS) -v -o $(NAME)
-	rm -rf s21_string_functions/*.o
+	$(CC) $^ $(CFLAGS) -lcheck -lm -lpthread -o $(NAME)
 	./$(NAME)
+	rm -rf s21_string_functions/*.o
 
 check_style:
 	clang-format -n --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h

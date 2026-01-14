@@ -9,4 +9,6 @@
 
 #include "../s21_string.h"
 
+Suite* string_suites(void);
+
 #endif
