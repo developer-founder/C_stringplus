@@ -30,7 +30,7 @@ $(LIB_NAME): $(OBJ)
 
 $(OBJ): $(SRC)
 	$(CC) $(CFLAGS) -c $^
-	mv *.o s21_string_functions
+	mv *.o ${SRC_DIR}
 
 $(TOBJ): $(TSRC)
 	$(CC) $(CFLAGS) -c $^
@@ -39,7 +39,8 @@ $(TOBJ): $(TSRC)
 all: test
 
 test: $(OBJ) $(TOBJ)
-	$(CC) $^ $(CFLAGS) -o $(NAME) $(LIBS)
+	$(CC) $^ $(CFLAGS) -v -o $(NAME)
+	rm -rf s21_string_functions/*.o
 	./$(NAME)
 
 check_style:
