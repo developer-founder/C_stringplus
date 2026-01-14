@@ -40,6 +40,7 @@ all: test
 
 test: $(OBJ) $(TOBJ)
 	$(CC) $^ $(CFLAGS) -o $(NAME) $(LIBS)
+	rm -rf *.o *.a $(SRC_DIR)/*.o $(TSRC_DIR)/*.o
 	./$(NAME)
 
 check_style:
