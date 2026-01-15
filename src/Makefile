@@ -11,7 +11,7 @@ TSRC_DIR = tests
 TSRC = $(wildcard $(TSRC_DIR)/*.c)
 TOBJ = $(TSRC:.c=.o)
 
-TEST_EXEC = test_s21_string
+TEST = test_s21_string
 
 AR = ar
 ARFLAGS = rcs
@@ -29,8 +29,9 @@ $(LIB_NAME): $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test: $(TOBJ) $(LIB_NAME)
-	$(CC) $(CFLAGS) $(TOBJ) $(LIB_NAME) $(LDFLAGS) -o $(TEST_EXEC) $(LIBS)
-	./$(TEST_EXEC)
+	$(CC) $(CFLAGS) $(TOBJ) $(LIB_NAME) $(LDFLAGS) -o $(TEST) $(LIBS)
+	./$(TEST)
+	rm -rf $(OBJ) $(TOBJ)
 
 check_style:
 	clang-format -n --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
@@ -39,4 +40,4 @@ fix_style:
 	clang-format -i --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
 
 clean:
-	rm -rf $(OBJ) $(TOBJ) $(LIB_NAME) $(TEST_EXEC)
+	rm -rf $(OBJ) $(TOBJ) $(LIB_NAME) $(TEST)
