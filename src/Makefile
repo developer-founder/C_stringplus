@@ -1,53 +1,42 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c11
+CFLAGS = -Wall -Wextra -Werror -std=c11 -I/opt/homebrew/Cellar/check/0.15.2/include
+LDFLAGS = -L/opt/homebrew/Cellar/check/0.15.2/lib
+LIBS = -lcheck -lm -lpthread
 
 SRC_DIR = s21_string_functions
-SRC = $(SRC_DIR)/*.c
+SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(SRC:.c=.o)
 
 TSRC_DIR = tests
-TSRC = $(TSRC_DIR)/*.c
+TSRC = $(wildcard $(TSRC_DIR)/*.c)
 TOBJ = $(TSRC:.c=.o)
+
+TEST_EXEC = test_s21_string
 
 AR = ar
 ARFLAGS = rcs
 
 LIB_NAME = s21_string.a
-NAME = s21_string
 
-SRC_DIR = s21_string_functions
-SRC = $(SRC_DIR)/*.c
-OBJ = $(SRC:.c=.o)
-
-TSRC_DIR = tests
-TSRC = $(TSRC_DIR)/*.c
-TOBJ = $(TSRC:.c=.o)
-
-.PHONY: all clean test gcov_report
-
-$(LIB_NAME): $(OBJ)
-	ar rcs $@ $^
-
-$(OBJ): $(SRC)
-	$(CC) $(CFLAGS) -c $^
-	mv *.o ${SRC_DIR}
-
-$(TOBJ): $(TSRC)
-	$(CC) $(CFLAGS) -c $^
-	mv *.o tests
+.PHONY: all clean test check_style fix_style
 
 all: test
 
-test: $(OBJ) $(TOBJ)
-	$(CC) $^ $(CFLAGS) -o $(NAME) $(LIBS)
-	rm -rf *.o *.a $(SRC_DIR)/*.o $(TSRC_DIR)/*.o
-	./$(NAME)
+$(LIB_NAME): $(OBJ)
+	$(AR) $(ARFLAGS) $@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+test: $(TOBJ) $(LIB_NAME)
+	$(CC) $(CFLAGS) $(TOBJ) $(LIB_NAME) $(LDFLAGS) -o $(TEST_EXEC) $(LIBS)
+	./$(TEST_EXEC)
 
 check_style:
 	clang-format -n --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
 
 fix_style:
-	clang-format -i --style="Google" $(SRC_DIR)/*.c $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
+	clang-format -i --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
 
 clean:
-	rm -rf *.o *.a $(SRC_DIR)/*.o $(TSRC_DIR)/*.o
+	rm -rf $(OBJ) $(TOBJ) $(LIB_NAME) $(TEST_EXEC)
