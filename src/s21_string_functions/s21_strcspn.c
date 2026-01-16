@@ -3,14 +3,20 @@
 
 s21_size_t s21_strcspn(const char* str1, const char* str2) {
     s21_size_t result = 0;
+    s21_size_t coincidence = 0;
 
-    if (str1) {
-        while (str1[result] != '\0' && str1[result] != str2[result]) {
+    for (s21_size_t i = 0; i < s21_strlen(str1); ++i) {
+        for (s21_size_t j = 0; j < s21_strlen(str2); ++j) {
+            if (str1[i] == str2[j]) {
+                coincidence++;
+            }
+        }
+        if (coincidence == 0) {
             result++;
+        } else {
+            break;
         }
     }
 
-    return result; 
-
-//    return strcspn(str1, str2);
+    return result;
 }
