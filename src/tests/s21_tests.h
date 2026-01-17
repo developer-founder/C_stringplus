@@ -11,5 +11,6 @@
 
 Suite* strcspn_suites(void);
 Suite* strerror_suites(void);
+Suite* strpbrk_suites(void);
 
 #endif
