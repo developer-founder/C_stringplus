@@ -40,4 +40,4 @@ fix_style:
 	clang-format -i --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
 
 clean:
-	rm -rf $(OBJ) $(TOBJ) $(LIB_NAME) $(TEST)
+	rm -rf $(OBJ) $(TOBJ) $(TEST)
