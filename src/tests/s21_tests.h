@@ -12,7 +12,7 @@
 Suite* strcspn_suites(void);
 Suite* strerror_suites(void);
 Suite* strpbrk_suites(void);
-Suite* strrchr_suites(void);
+// Suite* strrchr_suites(void);
 Suite* strstr_suites(void);
 
 #endif
