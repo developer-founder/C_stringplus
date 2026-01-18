@@ -8,6 +8,7 @@ int main(void) {
     srunner_add_suite(sr, strerror_suites());
     srunner_add_suite(sr, strpbrk_suites());
     srunner_add_suite(sr, strrchr_suites());
+    srunner_add_suite(sr, strtok_suites());
 
     srunner_run_all(sr, CK_NORMAL);
     failed = srunner_ntests_failed(sr);
