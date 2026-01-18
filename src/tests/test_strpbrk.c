@@ -49,3 +49,5 @@ Suite* strpbrk_suites(void) {
 
     return strpbrk_suite;
 }
+
+// добавить пару тестов
