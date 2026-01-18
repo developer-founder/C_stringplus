@@ -9,6 +9,7 @@
 
 #include "../s21_string.h"
 
+Suite* strncpy_suites(void);
 Suite* strcspn_suites(void);
 Suite* strerror_suites(void);
 Suite* strpbrk_suites(void);
