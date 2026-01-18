@@ -2,7 +2,7 @@
 
 char* s21_strrchr(const char* str, int c) {
     char* result = S21_NULL;
-    for (s21_size_t i = 0; i < s21_strlen(str) + 1; ++i) {
+    for (s21_size_t i = 0; i <= s21_strlen(str); ++i) {
         if (c == str[i]) {
             result = (char*)str + i;
         }

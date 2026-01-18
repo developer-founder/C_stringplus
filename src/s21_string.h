@@ -17,9 +17,9 @@ s21_size_t s21_strcspn(const char* str1, const char* str2);         // Пров�
 char* s21_strerror(int errnum);                                     // Проверен тестами
 s21_size_t s21_strlen(const char* str);                             // Не проверен тестами
 char* s21_strpbrk(const char* str1, const char* str2);              // Проверен тестами
-char* s21_strrchr(const char* str, int c);                          // Не проверен тестами
-char* s21_strstr(const char* haystack, const char* needle);         // Не проверен тестами
-// char *s21_strtok(char *str, const char *delim);
+char* s21_strrchr(const char* str, int c);                          // Проверен тестами
+char* s21_strstr(const char* haystack, const char* needle);         // Проверен тестами
+char *s21_strtok(char *str, const char *delim);
 // void *to_upper(const char *str);
 // void *to_lower(const char *str);
 // void *insert(const char *src, const char *str, size_t start_index);
