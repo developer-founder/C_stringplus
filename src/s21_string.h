@@ -19,7 +19,7 @@ s21_size_t s21_strlen(const char* str);                             // Пров�
 char* s21_strpbrk(const char* str1, const char* str2);              // Проверен тестами
 char* s21_strrchr(const char* str, int c);                          // Проверен тестами
 char* s21_strstr(const char* haystack, const char* needle);         // Проверен тестами
-char* s21_strtok(char* str, const char* delim);              // жду реализации функции
+char* s21_strtok(char* str, const char* delim);                     // Проверен тестами 
 // void *to_upper(const char *str);
 // void *to_lower(const char *str);
 // void *insert(const char *src, const char *str, size_t start_index);
