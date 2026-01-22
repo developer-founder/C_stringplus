@@ -3,133 +3,133 @@
 START_TEST(test_strrchr_basic) {
     char* str = "Hello, world!";
     int ch = 'o';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
 }
 END_TEST
 
 START_TEST(test_strrchr_first_char) {
     char* str = "Hello";
     int ch = 'H';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
 }
 END_TEST
 
 START_TEST(test_strrchr_last_char) {
     char* str = "Hello";
     int ch = 'o';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
 }
 END_TEST
 
 START_TEST(test_strrchr_multiple_occurrences) {
     char* str = "Hello, world! Hello!";
     int ch = 'l';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
-    ck_assert_ptr_eq(result, str + 17);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
+    ck_assert_ptr_eq(s21, str + 17);
 }
 END_TEST
 
 START_TEST(test_strrchr_not_found) {
     char* str = "Hello, world!";
     int ch = 'z';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
-    ck_assert_ptr_null(result);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
+    ck_assert_ptr_null(s21);
 }
 END_TEST
 
 START_TEST(test_strrchr_null_terminator) {
     char* str = "Hello";
     int ch = '\0';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
-    ck_assert_ptr_eq(result, str + 5);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
+    ck_assert_ptr_eq(s21, str + 5);
 }
 END_TEST
 
 START_TEST(test_strrchr_empty_string_null_char) {
     char* str = "";
     int ch = '\0';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
-    ck_assert_ptr_eq(result, str);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
+    ck_assert_ptr_eq(s21, str);
 }
 END_TEST
 
 START_TEST(test_strrchr_empty_string) {
     char* str = "";
     int ch = 'a';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
-    ck_assert_ptr_null(result);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
+    ck_assert_ptr_null(s21);
 }
 END_TEST
 
 START_TEST(test_strrchr_tab) {
     char* str = "Hello\tworld\t\tend";
     int ch = '\t';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
 }
 END_TEST
 
 START_TEST(test_strrchr_newline) {
     char* str = "Line1\nLine2\nLine3";
     int ch = '\n';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
 }
 END_TEST
 
 START_TEST(test_strrchr_digit) {
     char* str = "test123test456";
     int ch = '3';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
 }
 END_TEST
 
 START_TEST(test_strrchr_zero_digit) {
     char* str = "test102030";
     int ch = '0';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
-    ck_assert_ptr_eq(result, str + 9);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
+    ck_assert_ptr_eq(s21, str + 9);
 }
 END_TEST
 
 START_TEST(test_strrchr_case_sensitive) {
     char* str = "Hello World HELLO";
     int ch = 'H';
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
-    ck_assert_ptr_eq(result, str + 12);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
+    ck_assert_ptr_eq(s21, str + 12);
 }
 END_TEST
 
 START_TEST(test_strrchr_negative_char) {
     char* str = "Hello\xFFWorld";
     int ch = -1;
-    char* result = s21_strrchr(str, ch);
-    char* expected = strrchr(str, ch);
-    ck_assert_ptr_eq(result, expected);
+    char* s21 = s21_strrchr(str, ch);
+    char* original = strrchr(str, ch);
+    ck_assert_ptr_eq(s21, original);
 }
 END_TEST
 
