@@ -1,4 +1,5 @@
 #include "s21_tests.h"
+#include "../s21_string.h"
 
 int main(void) {
     int failed = 0;
