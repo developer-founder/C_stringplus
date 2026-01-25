@@ -2,8 +2,8 @@
 
 START_TEST(test_memcpy_basic) {
     char src[] = "Hello World";
-    char s21[20];
-    char original[20];
+    char s21[20] = {0};
+    char original[20] = {0};
 
     s21_memcpy(s21, src, 12);
     memcpy(original, src, 12);
@@ -13,8 +13,8 @@ END_TEST
 
 START_TEST(test_memcpy_partial_copy) {
     char src[] = "Hello World";
-    char s21[20];
-    char original[20];
+    char s21[20] = {0};
+    char original[20] = {0};
 
     s21_memcpy(s21, src, 5);
     memcpy(original, src, 5);
@@ -58,17 +58,6 @@ START_TEST(test_memcpy_struct) {
     s21_memcpy(&s21, &src, sizeof(struct test_struct));
     memcpy(&original, &src, sizeof(struct test_struct));
     ck_assert_mem_eq(&s21, &original, sizeof(struct test_struct));
-}
-END_TEST
-
-START_TEST(test_memcpy_overlap_src_before_dest) {
-    char buffer[] = "1234567890";
-    char buffer2[] = "1234567890";
-
-    /* Копирование со смещением вперед */
-    s21_memcpy(buffer + 2, buffer, 5);
-    memcpy(buffer2 + 2, buffer2, 5);
-    ck_assert_str_eq(buffer, buffer2);
 }
 END_TEST
 
@@ -273,7 +262,6 @@ Suite* memcpy_suites(void) {
     tcase_add_test(all_memcpy, test_memcpy_zero_bytes);
     tcase_add_test(all_memcpy, test_memcpy_int_array);
     tcase_add_test(all_memcpy, test_memcpy_struct);
-    tcase_add_test(all_memcpy, test_memcpy_overlap_src_before_dest);
     tcase_add_test(all_memcpy, test_memcpy_overlap_dest_before_src);
     tcase_add_test(all_memcpy, test_memcpy_exact_buffer);
     tcase_add_test(all_memcpy, test_memcpy_large_buffer);

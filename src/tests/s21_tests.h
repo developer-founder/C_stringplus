@@ -23,6 +23,6 @@ Suite* strlen_suites(void);
 Suite* strpbrk_suites(void);
 Suite* strrchr_suites(void);
 Suite* strstr_suites(void);
-// Suite* strtok_suites(void);
+Suite* strtok_suites(void);
 
 #endif
