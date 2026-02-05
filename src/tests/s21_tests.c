@@ -26,14 +26,18 @@ int main(void) {
     srunner_free(sr);
 
     char buffer[256];
+    char c1[3] = "llo";
+    // char c2 = 'w';
 
-    s21_sprintf(buffer, "Hello %% world");
+    s21_sprintf(buffer, "He%s %%orld", c1);
 
-    if (strcmp(buffer, "Hello %% world") == 0) {
+    if (strcmp(buffer, "Hello %orld") == 0) {
         printf("TEST PASSED\n");
+        printf("Expected: Hello %%orld\n");
+        printf("Got: %s\n", buffer);
     } else {
         printf("TEST FAILED\n");
-        printf("Expected: Hello %% world\n");
+        printf("Expected: Hello %%orld\n");
         printf("Got: %s\n", buffer);
     }
 
