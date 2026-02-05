@@ -25,5 +25,17 @@ int main(void) {
     failed = srunner_ntests_failed(sr);
     srunner_free(sr);
 
+    char buffer[256];
+
+    s21_sprintf(buffer, "Hello %% world");
+
+    if (strcmp(buffer, "Hello %% world") == 0) {
+        printf("TEST PASSED\n");
+    } else {
+        printf("TEST FAILED\n");
+        printf("Expected: Hello %% world\n");
+        printf("Got: %s\n", buffer);
+    }
+
     return failed ? EXIT_FAILURE : EXIT_SUCCESS;
 }
