@@ -3,6 +3,8 @@
 
 #define S21_NULL ((void*)0)
 
+#include <stdarg.h>
+
 typedef unsigned long s21_size_t;
 
 void* s21_memchr(const void* str, int c, s21_size_t n);             // Проверен тестами
@@ -20,6 +22,7 @@ char* s21_strpbrk(const char* str1, const char* str2);              // Пров�
 char* s21_strrchr(const char* str, int c);                          // Проверен тестами
 char* s21_strstr(const char* haystack, const char* needle);         // Проверен тестами
 char* s21_strtok(char* str, const char* delim);                     // Проверен тестами
+int s21_sprintf(char *str, const char* format, ...);                    // Не проверен тестами
 // void *to_upper(const char *str);
 // void *to_lower(const char *str);
 // void *insert(const char *src, const char *str, size_t start_index);
