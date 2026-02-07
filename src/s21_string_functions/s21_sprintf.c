@@ -18,11 +18,11 @@ void parse_format(va_list* args, const char* format, char* str, int* result) {
             j++;
             (*result)++;
         } else {
-                process_specifier(args, format[i+1], &str[j], result);
-                // str[j] = '%';
-                j++;
-                i++;
-                // (*result)++;
+            int old_result = *result;
+            process_specifier(args, format[i+1], &str[j], result);
+            int written = *result - old_result;
+            j += written;
+            i++;
         }
     }
 }
@@ -30,19 +30,60 @@ void parse_format(va_list* args, const char* format, char* str, int* result) {
 void process_specifier(va_list* args, char specifier, char* str, int* result) {
     if (specifier == 'c') {
         char c = (char)va_arg(*args, int);
-        *str = c;
-        (*result)++;
+        char_to_str(c, str, result);
     } else if (specifier == 's') {
         char *s = va_arg(*args, char*);
-        while (*s) {
-            *str = *s;
-            str++;
-            s++;
-            (*result)++;
-        }
+        str_to_str(s, str, result);
+    } else if (specifier == 'd') {
+        int num = va_arg(*args, int);
+        int_to_str(num, str, result);
     } else if (specifier == '%') {
         char c = '%';
         *str = c;
         (*result)++;
     }
+}
+
+void int_to_str(int num, char* str, int* result) {
+    if (num == 0) {
+        *str = '0';
+        (*result)++;
+        return;
+    } 
+    if (num < 0) {
+        *str = '-';
+        str++;
+        (*result)++;
+        num = -num;
+    }
+    int tmp = num;
+    s21_size_t len = 0;
+    while(tmp > 0) {
+        tmp /= 10;
+        len++;
+    }
+
+    for (; len > 0; --len) {
+        str[len-1] = num % 10 + '0';
+        num /= 10;
+        (*result)++;
+    }
+}
+
+void str_to_str(char* s, char* str, int* result) {
+    while (*s) {
+        *str = *s;
+        str++;
+        s++;
+        (*result)++;
+    } 
+}
+
+// void double_to_str(double num, char* str, int* result) {
+
+// }
+
+void char_to_str(char c, char* str, int* result) {
+    *str = c;
+    (*result)++;
 }
