@@ -40,6 +40,9 @@ void process_specifier(va_list* args, char specifier, char* str, int* result) {
     } else if (specifier == 'f') {
         double num = va_arg(*args, double);
         double_to_str(num, str, result);
+    } else if (specifier == 'u') {
+        unsigned int num = va_arg(*args, unsigned int);
+        uint_to_str(num, str, result);
     } else if (specifier == '%') {
         char c = '%';
         *str = c;
@@ -47,7 +50,7 @@ void process_specifier(va_list* args, char specifier, char* str, int* result) {
     }
 }
 
-void int_to_str(int num, char* str, int* result) {
+void int_to_str(long long num, char* str, int* result) {
     if (num == 0) {
         *str = '0';
         (*result)++;
@@ -59,7 +62,27 @@ void int_to_str(int num, char* str, int* result) {
         (*result)++;
         num = -num;
     }
-    int tmp = num;
+    long long tmp = num;
+    s21_size_t len = 0;
+    while(tmp > 0) {
+        tmp /= 10;
+        len++;
+    }
+
+    for (; len > 0; --len) {
+        str[len-1] = num % 10 + '0';
+        num /= 10;
+        (*result)++;
+    }
+}
+
+void uint_to_str(unsigned int num, char* str, int* result) {
+    if (num == 0) {
+        *str = '0';
+        (*result)++;
+        return;
+    }
+    unsigned int tmp = num;
     s21_size_t len = 0;
     while(tmp > 0) {
         tmp /= 10;
