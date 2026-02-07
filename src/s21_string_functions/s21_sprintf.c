@@ -37,6 +37,9 @@ void process_specifier(va_list* args, char specifier, char* str, int* result) {
     } else if (specifier == 'd') {
         int num = va_arg(*args, int);
         int_to_str(num, str, result);
+    } else if (specifier == 'f') {
+        double num = va_arg(*args, double);
+        double_to_str(num, str, result);
     } else if (specifier == '%') {
         char c = '%';
         *str = c;
@@ -79,9 +82,24 @@ void str_to_str(char* s, char* str, int* result) {
     } 
 }
 
-// void double_to_str(double num, char* str, int* result) {
-
-// }
+void double_to_str(double num, char* str, int* result) {
+    int old_result = *result;
+    long long int_part = (long long)num;
+    double frac = num - int_part;
+    int_to_str(int_part, str, result);
+    str += (*result - old_result);
+    *str = '.';
+    str++;
+    (*result)++;
+    for (int i = 0; i < 6; ++i) {
+        frac *= 10;
+        int digit = (int)frac;
+        *str = digit + '0';
+        frac -= digit;
+        str++;
+        (*result)++;
+    }
+}
 
 void char_to_str(char c, char* str, int* result) {
     *str = c;

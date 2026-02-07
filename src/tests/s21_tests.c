@@ -26,17 +26,17 @@ int main(void) {
     srunner_free(sr);
 
     char buffer[256];
-    int d = -123;
+    double d = 123.123;
 
-    s21_sprintf(buffer, "He%d %%orld", d);
+    s21_sprintf(buffer, "He%f %%orld", d);
 
-    if (strcmp(buffer, "He-123 %orld") == 0) {
+    if (strcmp(buffer, "He123.123 %orld") == 0) {
         printf("TEST PASSED\n");
-        printf("Expected: He-123 %%orld\n");
+        printf("Expected: He123.123 %%orld\n");
         printf("Got: %s\n", buffer);
     } else {
         printf("TEST FAILED\n");
-        printf("Expected: He-123 %%orld\n");
+        printf("Expected: He123.123 %%orld\n");
         printf("Got: %s\n", buffer);
     }
 
