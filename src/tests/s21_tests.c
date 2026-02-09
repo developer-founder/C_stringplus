@@ -26,19 +26,28 @@ int main(void) {
     srunner_free(sr);
 
     char buffer[256];
-    unsigned d = 1234567890;
+    char buffer2[256];
+    char* s = "ello";
+    int d = 123;
 
-    s21_sprintf(buffer, "He%u %%orld", d);
+    int result1 = s21_sprintf(buffer, "H%s %%orld%d", s, d);
+    int result2 = sprintf(buffer2, "H%s %%orld%d", s, d);
 
-    if (strcmp(buffer, "He1234567890 %orld") == 0) {
+    if (strcmp(buffer, buffer2) == 0) {
         printf("TEST PASSED\n");
-        printf("Expected: He1234567890 %%orld\n");
-        printf("Got: %s\n", buffer);
     } else {
         printf("TEST FAILED\n");
-        printf("Expected: He1234567890 %%orld\n");
-        printf("Got: %s\n", buffer);
     }
+    printf("Expected: %s\n", buffer2);
+    printf("Got: %s\n", buffer);
+
+    if (result1 == result2) {
+        printf("TEST PASSED\n");
+    } else {
+        printf("TEST FAILED\n");
+    }
+    printf("Expected: %d\n", result2);
+    printf("Got: %d\n", result1);
 
     return failed ? EXIT_FAILURE : EXIT_SUCCESS;
 }
