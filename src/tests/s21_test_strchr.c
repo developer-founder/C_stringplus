@@ -112,7 +112,7 @@ END_TEST
 
 START_TEST(test_strchr_char_beyond_ascii) {
     char str[] = "Hello";
-    int ch = 200;  // за пределами ASCII
+    int ch = 200;
 
     char* s21 = s21_strchr(str, ch);
     char* original = strchr(str, ch);
@@ -162,7 +162,7 @@ END_TEST
 
 START_TEST(test_strchr_uppercase_lowercase) {
     char str[] = "Hello World";
-    int ch = 'h';  // строчная h, а в строке H прописная
+    int ch = 'h';
 
     char* s21 = s21_strchr(str, ch);
     char* original = strchr(str, ch);
@@ -200,7 +200,7 @@ START_TEST(test_strchr_numeric_zero) {
 }
 END_TEST
 
-Suite* strchr_suites(void) {
+Suite* s21_strchr_suites(void) {
     Suite* strchr_suite = suite_create("strchr_tests");
 
     TCase* all_strchr = tcase_create("strchr");

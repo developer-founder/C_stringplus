@@ -24,7 +24,6 @@ END_TEST
 START_TEST(test_strlen_special_chars) {
     char str[] = "Test\n\t\r\0";
 
-    // strlen остановится на первом '\0', не включая его
     ck_assert_int_eq(s21_strlen(str), strlen(str));
 }
 END_TEST
@@ -65,7 +64,7 @@ START_TEST(test_strlen_one_char) {
 END_TEST
 
 START_TEST(test_strlen_unicode) {
-    char str[] = "Привет";  // 6 кириллических символов в UTF-8
+    char str[] = "Привет";
 
     ck_assert_int_eq(s21_strlen(str), strlen(str));
 }
@@ -74,7 +73,6 @@ END_TEST
 START_TEST(test_strlen_null_in_middle) {
     char str[] = {'H', 'e', 'l', 'l', 'o', '\0', 'W', 'o', 'r', 'l', 'd', '\0'};
 
-    // strlen остановится на первом '\0'
     ck_assert_int_eq(s21_strlen(str), strlen(str));
 }
 END_TEST
@@ -82,7 +80,6 @@ END_TEST
 START_TEST(test_strlen_max_chars) {
     char str[1025];
 
-    // Заполняем строку максимальной длины
     for (int i = 0; i < 1024; i++) {
         str[i] = 'A';
     }
@@ -135,14 +132,13 @@ START_TEST(test_strlen_escape_chars) {
 END_TEST
 
 START_TEST(test_strlen_hex_chars) {
-    char str[] = "\x48\x65\x6C\x6C\x6F";  // "Hello" в hex
+    char str[] = "\x48\x65\x6C\x6C\x6F";
 
     ck_assert_int_eq(s21_strlen(str), strlen(str));
 }
 END_TEST
 
 START_TEST(test_strlen_very_long) {
-    // Длинная строка, чтобы проверить производительность
     char* str = malloc(10001);
 
     for (int i = 0; i < 10000; i++) {
@@ -189,7 +185,6 @@ END_TEST
 START_TEST(test_strlen_pointer_arithmetic) {
     char str[] = "Hello World";
 
-    // strlen от середины строки
     ck_assert_int_eq(s21_strlen(str + 6), strlen(str + 6));
 }
 END_TEST
@@ -202,12 +197,11 @@ START_TEST(test_strlen_const_string) {
 END_TEST
 
 START_TEST(test_strlen_literal) {
-    // Прямой вызов со строковым литералом
     ck_assert_int_eq(s21_strlen("Test Literal"), strlen("Test Literal"));
 }
 END_TEST
 
-Suite* strlen_suites(void) {
+Suite* s21_strlen_suites(void) {
     Suite* strlen_suite = suite_create("strlen_tests");
 
     TCase* all_strlen = tcase_create("Core");

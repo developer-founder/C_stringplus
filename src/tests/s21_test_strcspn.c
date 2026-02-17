@@ -37,7 +37,6 @@ START_TEST(test_strcspn_both_empty) {
 }
 END_TEST
 
-// тесты на регистр
 START_TEST(test_strcspn_case_sensitive_no_match) {
     char* str = "Hello";
     char* substr = "HELLO";
@@ -52,7 +51,6 @@ START_TEST(test_strcspn_mixed_case) {
 }
 END_TEST
 
-// повторяющиеся символы
 START_TEST(test_strcspn_duplicate_in_substr) {
     char* str = "Hello";
     char* substr = "lll";
@@ -67,7 +65,6 @@ START_TEST(test_strcspn_multiple_matches) {
 }
 END_TEST
 
-// длинная строка
 START_TEST(test_strcspn_long_strings) {
     char str[1000];
     char substr[100];
@@ -102,7 +99,7 @@ START_TEST(test_strcspn_large_substr) {
 }
 END_TEST
 
-Suite* strcspn_suites(void) {
+Suite* s21_strcspn_suites(void) {
     Suite* strcspn_suite = suite_create("string_tests");
 
     TCase* all_strcspn = tcase_create("strcspn");

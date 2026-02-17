@@ -34,7 +34,7 @@ START_TEST(test_strpbrk_special_chars) {
 }
 END_TEST
 
-Suite* strpbrk_suites(void) {
+Suite* s21_strpbrk_suites(void) {
     Suite* strpbrk_suite = suite_create("strpbrk_tests");
 
     TCase* all_strpbrk = tcase_create("strpbrk");

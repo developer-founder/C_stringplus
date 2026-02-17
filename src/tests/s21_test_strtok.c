@@ -44,7 +44,7 @@ END_TEST
 START_TEST(test_empty_string) { compare_tokens("", " "); }
 END_TEST
 
-Suite* strtok_suites(void) {
+Suite* s21_strtok_suites(void) {
     Suite* strtok_suite = suite_create("strtok_tests");
 
     TCase* all_strtok = tcase_create("strtok");

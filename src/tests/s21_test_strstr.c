@@ -74,7 +74,7 @@ START_TEST(test_strstr_multiple_occurrences) {
     char* s21 = s21_strstr(haystack, needle);
     char* original = strstr(haystack, needle);
     ck_assert_ptr_eq(s21, original);
-    ck_assert_ptr_eq(s21, haystack);  // Первое вхождение
+    ck_assert_ptr_eq(s21, haystack);
 }
 END_TEST
 
@@ -84,7 +84,7 @@ START_TEST(test_strstr_overlapping) {
     char* s21 = s21_strstr(haystack, needle);
     char* original = strstr(haystack, needle);
     ck_assert_ptr_eq(s21, original);
-    ck_assert_ptr_eq(s21, haystack);  // Первое вхождение
+    ck_assert_ptr_eq(s21, haystack);
 }
 END_TEST
 
@@ -181,7 +181,7 @@ START_TEST(test_strstr_very_long_needle) {
 }
 END_TEST
 
-Suite* strstr_suites(void) {
+Suite* s21_strstr_suites(void) {
     Suite* strstr_suite = suite_create("strstr_tests");
 
     TCase* all_strstr = tcase_create("strstr");

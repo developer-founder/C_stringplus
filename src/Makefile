@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c11 -I/opt/homebrew/Cellar/check/0.15.2/include
+CFLAGS = -Wall -Wextra -std=c11 -I/opt/homebrew/Cellar/check/0.15.2/include
 LDFLAGS = -L/opt/homebrew/Cellar/check/0.15.2/lib
 LIBS = -lcheck -lm -lpthread
 

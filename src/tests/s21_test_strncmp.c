@@ -181,7 +181,7 @@ START_TEST(test_strncmp_spaces) {
 }
 END_TEST
 
-Suite* strncmp_suites(void) {
+Suite* s21_strncmp_suites(void) {
     Suite* strncmp_suite = suite_create("strncmp_tests");
 
     TCase* all_strncmp = tcase_create("strncmp");

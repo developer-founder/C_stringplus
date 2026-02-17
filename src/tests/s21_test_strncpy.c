@@ -57,9 +57,7 @@ START_TEST(test_strncpy_overwrite) {
 
     s21_strncpy(s21, src, 3);
     strncpy(original, src, 3);
-    /* strncpy не добавляет автоматически нуль-терминатор, если n <= strlen(src) */
     ck_assert_mem_eq(s21, original, 3);
-    /* Проверяем, что остальная часть строки не изменилась */
     ck_assert_str_eq(s21 + 3, "String");
 }
 END_TEST
@@ -72,12 +70,10 @@ START_TEST(test_strncpy_empty_source) {
     s21_strncpy(s21, src, 5);
     strncpy(original, src, 5);
 
-    // Первые 5 символов должны быть '\0'
     for (int i = 0; i < 5; i++) {
         ck_assert_int_eq(s21[i], '\0');
         ck_assert_int_eq(original[i], '\0');
     }
-    // s21[5] и дальше не должны измениться
     ck_assert_int_eq(s21[5], 'f');
     ck_assert_int_eq(original[5], 'f');
 }
@@ -91,9 +87,7 @@ START_TEST(test_strncpy_buffer_exact_size) {
     s21_strncpy(s21, src, sizeof(s21));
     strncpy(original, src, sizeof(original));
 
-    // Обе функции должны заполнить весь буфер, включая нуль-терминаторы
     ck_assert_mem_eq(s21, original, sizeof(s21));
-    // s21[5] должен быть '\0' (последний элемент массива)
     ck_assert_int_eq(s21[5], '\0');
 }
 END_TEST
@@ -117,7 +111,6 @@ START_TEST(test_strncpy_partial_overwrite) {
     s21_strncpy(s21, src, 3);
     strncpy(original, src, 3);
 
-    // Только первые 3 символа изменены
     ck_assert_mem_eq(s21, original, 20);
 }
 END_TEST
@@ -130,7 +123,6 @@ START_TEST(test_strncpy_zero_count) {
     s21_strncpy(s21, src, 0);
     strncpy(original, src, 0);
 
-    // s21 не должен измениться
     ck_assert_str_eq(s21, "Test");
     ck_assert_str_eq(original, "Test");
 }
@@ -147,7 +139,6 @@ START_TEST(test_strncpy_count_greater_than_src) {
     s21_strncpy(s21, src, 10);
     strncpy(original, src, 10);
 
-    // Первые 5 символов - "Hello", остальные 5 - '\0'
     ck_assert_mem_eq(s21, original, 10);
     ck_assert_mem_eq(s21, "Hello", 5);
     for (int i = 5; i < 10; i++) {
@@ -167,7 +158,6 @@ START_TEST(test_strncpy_exact_fit) {
     s21_strncpy(s21, src, 4);
     strncpy(original, src, 4);
 
-    // s21[4] должен остаться 'X', так как n=4 не включает нуль-терминатор
     ck_assert_mem_eq(s21, original, 5);
     ck_assert_mem_eq(s21, "ABCD", 4);
     ck_assert_int_eq(s21[4], 'X');
@@ -184,7 +174,6 @@ START_TEST(test_strncpy_zero_length_with_null) {
 
     ck_assert_mem_eq(s21, original, 10);
     ck_assert_int_eq(s21[0], '\0');
-    // Остальные 4 символа должны быть '\0'
     for (int i = 1; i < 5; i++) {
         ck_assert_int_eq(s21[i], '\0');
     }
@@ -202,20 +191,18 @@ START_TEST(test_strncpy_padding_zeros) {
     s21_strncpy(s21, src, 5);
     strncpy(original, src, 5);
 
-    // Проверяем что оставшиеся 3 байта заполнены нулями
     ck_assert_mem_eq(s21, original, 10);
     ck_assert_mem_eq(s21, "Hi", 2);
     for (int i = 2; i < 5; i++) {
         ck_assert_int_eq(s21[i], '\0');
     }
-    // Позиции 5-9 должны остаться 'A'
     for (int i = 5; i < 10; i++) {
         ck_assert_int_eq(s21[i], 'A');
     }
 }
 END_TEST
 
-Suite* strncpy_suites(void) {
+Suite* s21_strncpy_suites(void) {
     Suite* strncpy_suite = suite_create("strncpy_tests");
 
     TCase* all_strncpy = tcase_create("strncpy");

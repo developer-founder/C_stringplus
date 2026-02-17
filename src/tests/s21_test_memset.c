@@ -94,7 +94,7 @@ START_TEST(test_memset_unsigned_char_overflow) {
     char str1[20] = "Hello World";
     char str2[20] = "Hello World";
 
-    s21_memset(str1, 300, 5);  // 300 = 0x12C, будет усечено до 0x2C
+    s21_memset(str1, 300, 5);
     memset(str2, 300, 5);
     ck_assert_mem_eq(str1, str2, 20);
 }
@@ -124,11 +124,9 @@ START_TEST(test_memset_struct) {
 END_TEST
 
 START_TEST(test_memset_alignment_test) {
-    /* Тест на выравнивание памяти */
     char buffer1[64];
     char buffer2[64];
 
-    /* Заполняем с разными смещениями */
     for (int offset = 0; offset < 8; offset++) {
         s21_memset(buffer1 + offset, 0xCC, 32);
         memset(buffer2 + offset, 0xCC, 32);
@@ -152,7 +150,6 @@ START_TEST(test_memset_pattern) {
     char buffer1[100];
     char buffer2[100];
 
-    /* Заполняем байтовым паттерном */
     for (int i = 0; i < 100; i++) {
         buffer1[i] = pattern[i % 5];
         buffer2[i] = pattern[i % 5];
@@ -168,7 +165,6 @@ START_TEST(test_memset_zero_pattern) {
     char buffer1[50];
     char buffer2[50];
 
-    /* Инициализируем ненулевыми значениями */
     for (int i = 0; i < 50; i++) {
         buffer1[i] = i + 1;
         buffer2[i] = i + 1;
@@ -184,7 +180,6 @@ START_TEST(test_memset_compare_with_loop) {
     char buffer1[100];
     char buffer2[100];
 
-    /* Сравниваем с ручным заполнением */
     for (int i = 0; i < 100; i++) {
         buffer1[i] = 'X';
     }
@@ -195,11 +190,9 @@ START_TEST(test_memset_compare_with_loop) {
 END_TEST
 
 START_TEST(test_memset_boundary_conditions) {
-    /* Тест на граничные условия размера */
     char buffer1[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     char buffer2[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-    /* Размер в точности равен размеру буфера */
     s21_memset(buffer1, 0, 10);
     memset(buffer2, 0, 10);
     ck_assert_mem_eq(buffer1, buffer2, 10);
@@ -226,7 +219,7 @@ START_TEST(test_memset_pointer_array) {
 }
 END_TEST
 
-Suite* memset_suites(void) {
+Suite* s21_memset_suites(void) {
     Suite* memset_suite = suite_create("memset_tests");
 
     TCase* all_memset = tcase_create("memset");

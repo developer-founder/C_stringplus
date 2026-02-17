@@ -24,7 +24,6 @@ START_TEST(test_strerror_all_codes) {
 END_TEST
 
 START_TEST(test_strerror_boundaries) {
-    // минимальный и максимальный валидные коды
     ck_assert_str_eq(s21_strerror(0), strerror(0));
 
     for (int i = 1; i < 50; i += 3) {
@@ -34,7 +33,6 @@ START_TEST(test_strerror_boundaries) {
 END_TEST
 
 START_TEST(test_strerror_negative) {
-    // Отрицательные коды ошибок
     ck_assert_str_eq(s21_strerror(-1), strerror(-1));
     ck_assert_str_eq(s21_strerror(-100), strerror(-100));
     ck_assert_str_eq(s21_strerror(INT_MIN), strerror(INT_MIN));
@@ -42,14 +40,13 @@ START_TEST(test_strerror_negative) {
 END_TEST
 
 START_TEST(test_strerror_large_positive) {
-    // не валидные коды ошибок
     ck_assert_str_eq(s21_strerror(9999), strerror(9999));
     ck_assert_str_eq(s21_strerror(1000000), strerror(1000000));
     ck_assert_str_eq(s21_strerror(INT_MAX), strerror(INT_MAX));
 }
 END_TEST
 
-Suite* strerror_suites(void) {
+Suite* s21_strerror_suites(void) {
     Suite* strerror_suite = suite_create("strerror_tests");
 
     TCase* all_strerror = tcase_create("strerror");

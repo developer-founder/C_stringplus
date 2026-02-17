@@ -65,7 +65,6 @@ START_TEST(test_memcpy_overlap_dest_before_src) {
     char buffer[] = "1234567890";
     char buffer2[] = "1234567890";
 
-    /* Копирование со смещением назад */
     s21_memcpy(buffer, buffer + 3, 5);
     memcpy(buffer2, buffer2 + 3, 5);
     ck_assert_str_eq(buffer, buffer2);
@@ -88,7 +87,6 @@ START_TEST(test_memcpy_large_buffer) {
     char s21[1024];
     char original[1024];
 
-    /* Заполняем паттерном */
     for (int i = 0; i < 1024; i++) {
         src[i] = i % 256;
     }
@@ -111,7 +109,6 @@ START_TEST(test_memcpy_one_byte) {
 END_TEST
 
 START_TEST(test_memcpy_aligned_data) {
-    /* Тест с выровненными данными */
     int src[16];
     int s21[16];
     int original[16];
@@ -127,7 +124,6 @@ START_TEST(test_memcpy_aligned_data) {
 END_TEST
 
 START_TEST(test_memcpy_unaligned_data) {
-    /* Тест с невыровненными данными */
     char data[100];
     for (int i = 0; i < 100; i++) {
         data[i] = i;
@@ -136,7 +132,6 @@ START_TEST(test_memcpy_unaligned_data) {
     char s21[100];
     char original[100];
 
-    /* Копируем с невыровненного адреса */
     s21_memcpy(s21, data + 3, 50);
     memcpy(original, data + 3, 50);
     ck_assert_mem_eq(s21, original, 50);
@@ -146,7 +141,6 @@ END_TEST
 START_TEST(test_memcpy_same_pointers) {
     char buffer[] = "Test String";
 
-    /* Копирование в себя */
     s21_memcpy(buffer, buffer, 11);
     ck_assert_str_eq(buffer, "Test String");
 }
@@ -180,7 +174,6 @@ START_TEST(test_memcpy_pointer_array) {
 END_TEST
 
 START_TEST(test_memcpy_bit_field) {
-    /* Тест с битовыми полями */
     struct bitfield {
         unsigned int a : 4;
         unsigned int b : 4;
@@ -199,7 +192,6 @@ START_TEST(test_memcpy_bit_field) {
 END_TEST
 
 START_TEST(test_memcpy_mixed_types) {
-    /* Тест со смешанными типами в одном буфере */
     char buffer1[50];
     char buffer2[50];
 
@@ -207,7 +199,6 @@ START_TEST(test_memcpy_mixed_types) {
     double double_val = 3.14159;
     char str[] = "Hello";
 
-    /* Заполняем буфер смешанными данными */
     memcpy(buffer1, &int_val, sizeof(int));
     memcpy(buffer1 + sizeof(int), &double_val, sizeof(double));
     memcpy(buffer1 + sizeof(int) + sizeof(double), str, 6);
@@ -218,17 +209,14 @@ START_TEST(test_memcpy_mixed_types) {
 END_TEST
 
 START_TEST(test_memcpy_boundary) {
-    /* Тест граничных условий */
     char src[] = "ABCDEFGHIJ";
     char s21[15];
     char original[15];
 
-    /* Копируем все кроме нуль-терминатора */
     s21_memcpy(s21, src, 10);
     memcpy(original, src, 10);
     ck_assert_mem_eq(s21, original, 10);
 
-    /* Добавляем нуль-терминатор */
     s21[10] = '\0';
     original[10] = '\0';
     ck_assert_str_eq(s21, original);
@@ -236,13 +224,11 @@ START_TEST(test_memcpy_boundary) {
 END_TEST
 
 START_TEST(test_memcpy_performance_pattern) {
-    /* Паттерн для проверки производительности */
     char pattern[] = {0x00, 0xFF, 0x55, 0xAA};
     char src[256];
     char s21[256];
     char original[256];
 
-    /* Заполняем повторяющимся паттерном */
     for (int i = 0; i < 256; i++) {
         src[i] = pattern[i % 4];
     }
@@ -253,7 +239,7 @@ START_TEST(test_memcpy_performance_pattern) {
 }
 END_TEST
 
-Suite* memcpy_suites(void) {
+Suite* s21_memcpy_suites(void) {
     Suite* memcpy_suite = suite_create("memcpy_tests");
 
     TCase* all_memcpy = tcase_create("memcpy");

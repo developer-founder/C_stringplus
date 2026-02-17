@@ -159,7 +159,6 @@ START_TEST(test_strncat_repeated) {
     char original[30] = "A";
     char src[] = "B";
 
-    /* Добавляем несколько раз */
     s21_strncat(s21, src, 1);
     s21_strncat(s21, src, 1);
     s21_strncat(s21, src, 1);
@@ -188,7 +187,6 @@ START_TEST(test_strncat_buffer_boundary) {
     char original[15] = "123456789";
     char src[] = "abcdef";
 
-    /* Буфер размером 15, уже занято 9 + '\0' = 10, осталось 5 */
     s21_strncat(s21, src, 5);
     strncat(original, src, 5);
     ck_assert_str_eq(s21, original);
@@ -196,11 +194,10 @@ START_TEST(test_strncat_buffer_boundary) {
 END_TEST
 
 START_TEST(test_strncat_exact_fit) {
-    char s21[12] = "Hello";  // 5 символов + '\0'
+    char s21[12] = "Hello";
     char original[12] = "Hello";
-    char src[] = " World";  // 6 символов
+    char src[] = " World";
 
-    /* s21 имеет размер 12, нужно 5 + 6 + '\0' = 12 */
     s21_strncat(s21, src, 6);
     strncat(original, src, 6);
     ck_assert_str_eq(s21, original);
@@ -218,7 +215,7 @@ START_TEST(test_strncat_partial_null_terminator) {
 }
 END_TEST
 
-Suite* strncat_suites(void) {
+Suite* s21_strncat_suites(void) {
     Suite* strncat_suite = suite_create("strncat_tests");
 
     TCase* all_strncat = tcase_create("strncat");

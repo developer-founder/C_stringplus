@@ -39,7 +39,7 @@ END_TEST
 START_TEST(test_memchr_char_after_range) {
     char str[] = "Hello World";
 
-    void* s21 = s21_memchr(str, 'd', 10);  // Ищем 'd' но только в первых 10 байтах
+    void* s21 = s21_memchr(str, 'd', 10);
     void* original = memchr(str, 'd', 10);
     ck_assert_ptr_eq(s21, original);
 }
@@ -145,7 +145,6 @@ END_TEST
 START_TEST(test_memchr_partial_search) {
     char str[] = "Hello World Hello World";
 
-    // Ищем во второй половине строки
     void* s21 = s21_memchr(str + 12, 'W', 10);
     void* original = memchr(str + 12, 'W', 10);
     ck_assert_ptr_eq(s21, original);
@@ -155,7 +154,6 @@ END_TEST
 START_TEST(test_memchr_not_in_range) {
     char str[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    // Ищем 'Z' только в первых 10 символах
     void* s21 = s21_memchr(str, 'Z', 10);
     void* original = memchr(str, 'Z', 10);
     ck_assert_ptr_eq(s21, original);
@@ -165,7 +163,6 @@ END_TEST
 START_TEST(test_memchr_repeated_char) {
     char str[] = "aaaaabaaaa";
 
-    // Ищем 'b' среди множества 'a'
     void* s21 = s21_memchr(str, 'b', 10);
     void* original = memchr(str, 'b', 10);
     ck_assert_ptr_eq(s21, original);
@@ -175,7 +172,6 @@ END_TEST
 START_TEST(test_memchr_exact_size) {
     char str[] = "Hello";
 
-    // Ищем ровно в пределах строки
     void* s21 = s21_memchr(str, 'o', 5);
     void* original = memchr(str, 'o', 5);
     ck_assert_ptr_eq(s21, original);
@@ -185,7 +181,6 @@ END_TEST
 START_TEST(test_memchr_larger_than_size) {
     char str[] = "Hello";
 
-    // Ищем за пределами фактической проверки
     void* s21 = s21_memchr(str, 'o', 10);
     void* original = memchr(str, 'o', 10);
     ck_assert_ptr_eq(s21, original);
@@ -221,7 +216,7 @@ END_TEST
 
 START_TEST(test_memchr_double_array) {
     double arr[] = {1.1, 2.2, 3.3, 4.4};
-    unsigned char search_byte = 0x66;  // Часть представления double
+    unsigned char search_byte = 0x66;
 
     void* s21 = s21_memchr(arr, search_byte, 4 * sizeof(double));
     void* original = memchr(arr, search_byte, 4 * sizeof(double));
@@ -241,12 +236,10 @@ END_TEST
 START_TEST(test_memchr_alignment_test) {
     char buffer[64];
 
-    // Заполняем паттерном
     for (int i = 0; i < 64; i++) {
         buffer[i] = i % 16;
     }
 
-    // Ищем с разными выравниваниями
     for (int offset = 0; offset < 8; offset++) {
         void* s21 = s21_memchr(buffer + offset, 7, 32);
         void* original = memchr(buffer + offset, 7, 32);
@@ -262,7 +255,6 @@ START_TEST(test_memchr_large_buffer) {
         buffer[i] = i % 256;
     }
 
-    // Ищем значение в конце буфера
     buffer[999] = 0xFF;
 
     void* s21 = s21_memchr(buffer, 0xFF, 1000);
@@ -273,7 +265,7 @@ START_TEST(test_memchr_large_buffer) {
 }
 END_TEST
 
-Suite* memchr_suites(void) {
+Suite* s21_memchr_suites(void) {
     Suite* memchr_suite = suite_create("memchr_tests");
 
     TCase* all_memchr = tcase_create("memchr");

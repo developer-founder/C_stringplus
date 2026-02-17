@@ -81,7 +81,6 @@ START_TEST(test_memcmp_negative_result) {
     int result1 = s21_memcmp(str1, str2, 1);
     int result2 = memcmp(str1, str2, 1);
 
-    /* Проверяем что оба отрицательные или оба положительные */
     ck_assert_int_eq((result1 < 0), (result2 < 0));
 }
 END_TEST
@@ -190,7 +189,6 @@ START_TEST(test_memcmp_large_memory) {
         arr2[i] = i % 256;
     }
 
-    /* Делаем одно отличие */
     arr2[500] = arr1[500] + 1;
 
     ck_assert_int_eq(s21_memcmp(arr1, arr2, 1000), memcmp(arr1, arr2, 1000));
@@ -201,9 +199,8 @@ START_TEST(test_memcmp_large_memory) {
 END_TEST
 
 START_TEST(test_memcmp_bit_difference) {
-    /* Тест на разницу в одном бите */
     unsigned char arr1[] = {0x00, 0xFF, 0x55, 0xAA};
-    unsigned char arr2[] = {0x00, 0xFF, 0x55, 0xAB}; /* Отличие в последнем байте */
+    unsigned char arr2[] = {0x00, 0xFF, 0x55, 0xAB};
 
     ck_assert_int_eq(s21_memcmp(arr1, arr2, 4), memcmp(arr1, arr2, 4));
 }
@@ -216,18 +213,14 @@ START_TEST(test_memcmp_misaligned_pointers) {
         buffer[i] = i;
     }
 
-    /* Сравниваем с разными смещениями */
     ck_assert_int_eq(s21_memcmp(buffer + 3, buffer + 10, 20), memcmp(buffer + 3, buffer + 10, 20));
 }
 END_TEST
 
 START_TEST(test_memcmp_sign_extension) {
-    /* Проверка на расширение знака при сравнении */
     signed char a = -1;
     unsigned char b = 255;
 
-    /* -1 (0xFF) как signed char vs 255 (0xFF) как unsigned char */
-    /* memcmp сравнивает байты как unsigned char */
     ck_assert_int_eq(s21_memcmp(&a, &b, 1), memcmp(&a, &b, 1));
 }
 END_TEST
@@ -237,13 +230,11 @@ START_TEST(test_memcmp_pattern) {
     char buffer1[100];
     char buffer2[100];
 
-    /* Заполняем одинаковыми паттернами */
     for (int i = 0; i < 100; i++) {
         buffer1[i] = pattern[i % 4];
         buffer2[i] = pattern[i % 4];
     }
 
-    /* Вносим одно изменение */
     buffer2[50] = 0x04;
 
     ck_assert_int_eq(s21_memcmp(buffer1, buffer2, 100), memcmp(buffer1, buffer2, 100));
@@ -251,7 +242,6 @@ START_TEST(test_memcmp_pattern) {
 END_TEST
 
 START_TEST(test_memcmp_reverse_order) {
-    /* Сравнение в обратном порядке должно дать противоположный знак */
     char str1[] = "ABCD";
     char str2[] = "ABCE";
 
@@ -270,7 +260,7 @@ START_TEST(test_memcmp_empty_arrays) {
 }
 END_TEST
 
-Suite* memcmp_suites(void) {
+Suite* s21_memcmp_suites(void) {
     Suite* memcmp_suite = suite_create("memcmp_tests");
 
     TCase* all_memcmp = tcase_create("memcmp");

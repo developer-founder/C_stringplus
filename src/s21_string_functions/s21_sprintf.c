@@ -34,64 +34,91 @@ void process_specifier(va_list* args, const char* format, int* i, char* str, int
             break;
         case '%':
             char_to_str(format[*i], str, result);
+            break;
+        case 'i':
         case 'd':
             specs->d = va_arg(*args, int);
             int_to_str(specs->d, str, result);
+            break;
+        case 'f':
+            specs->f = va_arg(*args, double);
+            double_to_str(specs->f, str, result);
+            break;
+        case 'u':
+            specs->u = va_arg(*args, unsigned int);
+            uint_to_str(specs->u, str, result);
+            break;
         }
-    // } else if (specifier == 'd') {
-    //     // int num = va_arg(*args, int);
-    //     // int_to_str(num, str, result);
-    // } else if (specifier == 'f') {
-    //     // double num = va_arg(*args, double);
-    //     // double_to_str(num, str, result);
-    // } else if (specifier == 'u') {
-    //     // unsigned int num = va_arg(*args, unsigned int);
-    //     // uint_to_str(num, str, result);
-    // }
 }
 
 void int_to_str(long long num, char* str, int* result) {
     if (num == 0) {
         str[(*result)++] = '0';
         return;
-    } 
+    }
     if (num < 0) {
         str[(*result)++] = '-';
         num = -num;
     }
     long long tmp = num;
+    int len = 0;
+    while (tmp > 0) {
+        tmp /= 10;
+        len++;
+    }
+    char tempStr[len + 1];
+    for (int i = len - 1; i >= 0; i--) {
+        tempStr[i] = num % 10 + '0';
+        num /= 10;
+    }
+    tempStr[len] = '\0';
+    logic_for_to_string(tempStr, str, result);
+}
+
+void uint_to_str(unsigned int num, char* str, int* result) {
+    if (num == 0) {
+        str[(*result)++] = '0';
+        return;
+    }
+    unsigned int tmp = num;
     s21_size_t len = 0;
     while(tmp > 0) {
         tmp /= 10;
         len++;
     }
 
-    for (; len > 0; --len) {
-        str[len-1] = num % 10 + '0';
+    char tempStr[len + 1];
+    for (int i = len - 1; i >= 0; i--) {
+        tempStr[i] = num % 10 + '0';
         num /= 10;
-        (*result)++;
     }
+    tempStr[len] = '\0';
+    logic_for_to_string(tempStr, str, result);
 }
 
-// void uint_to_str(unsigned int num, char* str, int* result) {
-//     if (num == 0) {
-//         str[(*result)++] = '0';
-//         // (*result)++;
-//         return;
-//     }
-//     unsigned int tmp = num;
-//     s21_size_t len = 0;
-//     while(tmp > 0) {
-//         tmp /= 10;
-//         len++;
-//     }
+void double_to_str(double num, char* str, int* result) {
+    long long int_part = (long long)num;
+    double frac = num - int_part;
+    if (frac < 0) frac = -frac;
+    
+    int_to_str(int_part, str, result);
 
-//     for (; len > 0; --len) {
-//         str[len-1] = num % 10 + '0';
-//         num /= 10;
-//         (*result)++;
-//     }
-// }
+    str[(*result)++] = '.';
+
+    long long frac_int = (long long)(frac * 1000000 + 0.5);
+
+    int digits = 0;
+    long long temp = frac_int;
+    do {
+        digits++;
+        temp /= 10;
+    } while (temp > 0);
+
+    for (int i = 0; i < 6 - digits; i++)
+        str[(*result)++] = '0';
+
+    int_to_str(frac_int, str, result);
+}
 
 void str_to_str(char* s, char* str, int* result) {
     for (int i = 0; s[i]; ++i) {
@@ -99,21 +126,13 @@ void str_to_str(char* s, char* str, int* result) {
     } 
 }
 
-// void double_to_str(double num, char* str, int* result) {
-//     // int old_result = *result;
-//     long long int_part = (long long)num;
-//     double frac = (num - int_part) * 1000000 + 0.5;
-//     int_to_str(int_part, str, result);
-//     str[(*result)++] = '.';
-//     // str++;
-//     // (*result)++;
-//     int_to_str(frac, str, result);
-// }
-
 void char_to_str(char c, char* str, int* result) {
     str[(*result)++] = c;
 }
 
-void logic_for_to_string() {
-
-}
+void logic_for_to_string(char* tempStr, char* str, int* result) {
+    int tempStrLen = s21_strlen(tempStr);
+    for (int i = 0; i < tempStrLen; i++) {
+        str[(*result)++] = tempStr[i];
+    }
+}   

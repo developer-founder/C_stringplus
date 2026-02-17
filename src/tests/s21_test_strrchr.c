@@ -133,7 +133,7 @@ START_TEST(test_strrchr_negative_char) {
 }
 END_TEST
 
-Suite* strrchr_suites(void) {
+Suite* s21_strrchr_suites(void) {
     Suite* strrchr_suite = suite_create("strrchr_tests");
 
     TCase* all_strrchr = tcase_create("strrchr");
