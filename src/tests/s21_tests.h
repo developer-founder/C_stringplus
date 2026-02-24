@@ -25,5 +25,9 @@ Suite* s21_strrchr_suites(void);
 Suite* s21_strstr_suites(void);
 Suite* s21_strtok_suites(void);
 Suite* s21_sprintf_suites(void);
+Suite* s21_insert_suites(void);
+Suite* s21_to_lower_suites(void);
+Suite* s21_to_upper_suites(void);
+Suite* s21_trim_suites(void);
 
 #endif

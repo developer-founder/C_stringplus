@@ -1,5 +1,6 @@
-#include "../s21_string.h"
 #include <stdio.h>
+
+#include "../s21_string.h"
 
 #if defined(__APPLE__)
 #define MAX_ERROR 107
@@ -254,14 +255,14 @@ const char* s21_error[] = {"Success",
 #endif
 
 char* s21_strerror(int errnum) {
-    char *result = 0;
-    if (MIN_ERROR < errnum && errnum < MAX_ERROR) {
-        result = (char*)s21_error[errnum];
-    } else {
-        static char error[100];
-        sprintf(error, "%s %d", ERROR, errnum);
-        result = error;
-    }
+  char* result = 0;
+  if (MIN_ERROR < errnum && errnum < MAX_ERROR) {
+    result = (char*)s21_error[errnum];
+  } else {
+    static char error[100];
+    sprintf(error, "%s %d", ERROR, errnum);
+    result = error;
+  }
 
-    return result; 
+  return result;
 }
