@@ -1,44 +1,35 @@
 #include "s21_tests.h"
+
 #include "../s21_string.h"
 
 int main(void) {
-    int failed = 0;
-    SRunner* sr = srunner_create(NULL);
+  int failed = 0;
+  SRunner* sr = srunner_create(NULL);
 
-    srunner_add_suite(sr, memchr_suites());
-    srunner_add_suite(sr, memcmp_suites());
-    srunner_add_suite(sr, memcpy_suites());
-    srunner_add_suite(sr, memset_suites());
-    srunner_add_suite(sr, strncat_suites());
-    srunner_add_suite(sr, strchr_suites());
-    srunner_add_suite(sr, strncmp_suites());
-    srunner_add_suite(sr, strncpy_suites());
-    srunner_add_suite(sr, strcspn_suites());
-    srunner_add_suite(sr, strerror_suites());
-    srunner_add_suite(sr, strlen_suites());
-    srunner_add_suite(sr, strpbrk_suites());
-    srunner_add_suite(sr, strrchr_suites());
-    srunner_add_suite(sr, strstr_suites());
-    srunner_add_suite(sr, strtok_suites());
+  srunner_add_suite(sr, s21_insert_suites());
+  srunner_add_suite(sr, s21_memchr_suites());
+  srunner_add_suite(sr, s21_memcmp_suites());
+  srunner_add_suite(sr, s21_memcpy_suites());
+  srunner_add_suite(sr, s21_memset_suites());
+  srunner_add_suite(sr, s21_strncat_suites());
+  srunner_add_suite(sr, s21_strchr_suites());
+  srunner_add_suite(sr, s21_strncmp_suites());
+  srunner_add_suite(sr, s21_strncpy_suites());
+  srunner_add_suite(sr, s21_strcspn_suites());
+  srunner_add_suite(sr, s21_strerror_suites());
+  srunner_add_suite(sr, s21_strlen_suites());
+  srunner_add_suite(sr, s21_strpbrk_suites());
+  srunner_add_suite(sr, s21_strrchr_suites());
+  srunner_add_suite(sr, s21_strstr_suites());
+  srunner_add_suite(sr, s21_strtok_suites());
+  srunner_add_suite(sr, s21_sprintf_suites());
+  srunner_add_suite(sr, s21_to_lower_suites());
+  srunner_add_suite(sr, s21_to_upper_suites());
+  srunner_add_suite(sr, s21_trim_suites());
 
-    srunner_run_all(sr, CK_NORMAL);
-    failed = srunner_ntests_failed(sr);
-    srunner_free(sr);
+  srunner_run_all(sr, CK_NORMAL);
+  failed = srunner_ntests_failed(sr);
+  srunner_free(sr);
 
-    char buffer[256];
-    unsigned d = 1234567890;
-
-    s21_sprintf(buffer, "He%u %%orld", d);
-
-    if (strcmp(buffer, "He1234567890 %orld") == 0) {
-        printf("TEST PASSED\n");
-        printf("Expected: He1234567890 %%orld\n");
-        printf("Got: %s\n", buffer);
-    } else {
-        printf("TEST FAILED\n");
-        printf("Expected: He1234567890 %%orld\n");
-        printf("Got: %s\n", buffer);
-    }
-
-    return failed ? EXIT_FAILURE : EXIT_SUCCESS;
+  return failed ? EXIT_FAILURE : EXIT_SUCCESS;
 }

@@ -1,43 +1,57 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c11 -I/opt/homebrew/Cellar/check/0.15.2/include
 LDFLAGS = -L/opt/homebrew/Cellar/check/0.15.2/lib
-LIBS = -lcheck -lm -lpthread
+CFLAGS      = -Wall -Werror -Wextra -std=c11 -I/opt/homebrew/Cellar/check/0.15.2/include
+TEST_CFLAGS = -Wall -Wextra -std=c11 -I/opt/homebrew/Cellar/check/0.15.2/include
+SRC=s21_string_functions/*.c
+OBJ=$(SRC:.c=.o)
+TSRC=tests/*.c
+TOBJ=$(TSRC:.c=.o)
+LIB_NAME=s21_string.a
+NAME=s21_string
+UNAME=$(shell uname -s)
 
-SRC_DIR = s21_string_functions
-SRC = $(wildcard $(SRC_DIR)/*.c)
-OBJ = $(SRC:.c=.o)
+ifeq ($(UNAME), Linux)
+	LIBS=-lcheck -lm -lrt -lpthread -lsubunit
+endif
+ifeq ($(UNAME), Darwin)
+	LIBS=-lcheck
+endif
 
-TSRC_DIR = tests
-TSRC = $(wildcard $(TSRC_DIR)/*.c)
-TOBJ = $(TSRC:.c=.o)
+GCOV_FLAGS = -fprofile-arcs -ftest-coverage
+CHECK_FLAGS = $(LIBS)
 
-TEST = test_s21_string
-
-AR = ar
-ARFLAGS = rcs
-
-LIB_NAME = s21_string.a
-
-.PHONY: all clean test check_style fix_style
-
-all: test
-
-$(LIB_NAME): $(OBJ)
-	$(AR) $(ARFLAGS) $@ $^
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-test: $(TOBJ) $(LIB_NAME)
-	$(CC) $(CFLAGS) $(TOBJ) $(LIB_NAME) $(LDFLAGS) -o $(TEST) $(LIBS)
-	./$(TEST)
-	rm -rf $(OBJ) $(TOBJ)
-
-check_style:
-	clang-format -n --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
-
-fix_style:
-	clang-format -i --style="Google" $(SRC_DIR)/*.c $(SRC_DIR)/*.h $(TSRC_DIR)/*.c $(TSRC_DIR)/*.h
+all: clean $(LIB_NAME) test gcov_report
 
 clean:
-	rm -rf $(OBJ) $(TOBJ) $(TEST) $(LIB_NAME) s21_string
+	rm -rf $(OBJ) $(TOBJ) s21_string report coverage.info *.o *.gcda *.gcno s21_tests $(LIB_NAME)
+
+test: $(OBJ) $(TOBJ)
+	$(CC) $^ $(CFLAGS) -o $(NAME) $(LIBS)
+	./$(NAME)
+
+$(LIB_NAME): $(OBJ)
+	ar rcs $@ $^
+
+$(OBJ): $(SRC)
+	$(CC) $(CFLAGS) -c $^
+	mv *.o s21_string_functions
+
+$(TOBJ): $(TSRC)
+	$(CC) $(CFLAGS) -c $^
+	mv *.o tests
+
+rebuild: clean $(LIB_NAME) test
+
+check_style:
+	clang-format -n --style="Google" s21_string_functions/*.c s21_string_functions/*.h tests/*.c *.h
+
+fix_style:
+	clang-format -i --style="Google" s21_string_functions/*.c s21_string_functions/*.h tests/*.c *.h
+
+gcov_report:
+	$(CC) $(TEST_CFLAGS) $(GCOV_FLAGS) $(SRC) $(TSRC) -o s21_test_gcov $(LDFLAGS) $(LIBS) -lm
+	./s21_test_gcov
+	lcov --capture --directory . --output-file coverage.info --no-external
+	genhtml coverage.info --output-directory report
+	open report/index.html
+	rm -rf *.gcda *.gcno *.info s21_test_gcov
